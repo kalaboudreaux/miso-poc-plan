@@ -283,6 +283,159 @@ The current IT roadmap for Microsoft Fabric has a projected timeline of 24 month
 ### Key Contacts
 **MISO:** Ben Boutwell (bboutwell@misoenergy.org), Jeff Gough (jgough@misoenergy.org)
 **Snowflake:** Kala Boudreaux (kala.boudreaux@snowflake.com), Fred Cohagan (fred.cohagan@snowflake.com)""",
+
+    "sizing_overview": """### Sizing Methodology
+
+This estimate is built bottom-up from MISO's 6 validated use cases, benchmarked against comparable energy sector Snowflake customers:
+
+| Comparable Customer | ACV | Relevance |
+|-------------------|-----|----------|
+| **Southern California Edison** | $7,054,510 | Largest utility reference — AMI data, forecasting, grid planning |
+| **National Grid USA** | $1,500,000 | Multi-state utility — data warehousing + analytics |
+| **Tampa Electric** | $1,300,000 | Regional utility — market analytics |
+| **Vistra Corp** | $948,978 | Power generation + retail — market risk, trading analytics |
+| **Powerex (BC Hydro)** | $434,615 | Commodity trading arm — market data, risk analysis |
+
+**MISO Profile:** $413M revenue, 1,100 employees, ~550 in IDEA Group, 7 FTEs on Ben's data science team, $32B+ wholesale market managed, 15+ states, 42M people served, 20 years of historical market data, 9 Synapse workspaces x 4 environments (36 total).
+
+**Sizing Approach:** Each use case is sized by Snowflake workload type (compute, storage, AI/ML, data sharing) with conservative (Phase 1), moderate (Year 1 steady-state), and full-potential (Year 2-3 expansion) estimates.""",
+
+    "sizing_by_usecase": """### Use Case 1: ML for Energy Market Risk Analysis
+*Priority: Active — Phase 1 POC*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| Snowpark ML Compute | Model training, inference on market datasets (XS-L warehouses) | $48,000 - $72,000 |
+| Storage | Historical market data (pricing, volumes, bids/offers) — est. 5-15 TB compressed | $6,000 - $18,000 |
+| Cortex AI Functions | AI_CLASSIFY, AI_EXTRACT on market signals | $12,000 - $24,000 |
+| **Use Case 1 Total** | | **$66,000 - $114,000** |
+
+**Business Outcome:** 10x faster model execution, 100+ stochastic scenarios (vs. 3-4 today), unblock data science team this quarter
+
+---
+
+### Use Case 2: Market Anomaly Detection & Threat Hunting
+*Priority: High — Cortex AI*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| Cortex AI Anomaly Detection | Continuous anomaly detection on market transactions | $36,000 - $60,000 |
+| Always-on Warehouse (XS) | Near-real-time monitoring of virtual trading patterns | $24,000 - $36,000 |
+| Storage | 20 years historical transaction data for pattern training — est. 10-30 TB | $12,000 - $36,000 |
+| **Use Case 2 Total** | | **$72,000 - $132,000** |
+
+**Business Outcome:** 50% reduction in false-positive alerts, protect integrity of $32B market, improve forecast MAPE below 7.4%
+
+---
+
+### Use Case 3: Data Fabric as a Service (Iceberg/OneLake)
+*Priority: Strategic — Fabric Accelerator*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| Multi-cluster Warehouse | Central EDW replacing 9 Synapse workspaces x 4 enviros | $96,000 - $180,000 |
+| Dynamic Tables | Automated data pipelines, dedup, normalization (replacing manual grooming) | $36,000 - $60,000 |
+| Iceberg Integration | Bidirectional OneLake/ADLS compute | $12,000 - $24,000 |
+| Storage | Unified data layer across all groups — est. 20-50 TB | $24,000 - $60,000 |
+| **Use Case 3 Total** | | **$168,000 - $324,000** |
+
+**Business Outcome:** 87.5% time-to-value reduction (3 months vs. 24), automate 80% of data grooming, save 2,800+ engineering hours/year across 7 FTEs
+
+---
+
+### Use Case 4: Legacy Data Migration & Modernization
+*Priority: Near-Term*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| SnowConvert AI | Automated SQL Server + Oracle code migration | $18,000 - $30,000 |
+| Snowpipe / Ingestion | Flat file ingestion from NAS stores, streaming from on-prem | $24,000 - $48,000 |
+| Storage | Migrated SQL Server + Oracle + flat file data — est. 10-25 TB | $12,000 - $30,000 |
+| **Use Case 4 Total** | | **$54,000 - $108,000** |
+
+**Business Outcome:** 4x faster migration at 90% lower cost than manual refactoring, reclaim 2,800+ engineering hours/year, eliminate Netezza dependency by EOY
+
+---
+
+### Use Case 5: Long-Range Grid Planning & Power Flow
+*Priority: Strategic — High Compute*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| Multi-cluster Burst Compute (L-4XL) | 8,760-hour power flow simulations, parallel execution | $60,000 - $120,000 |
+| Snowpark Containers | Custom power system models (GE, PowerGem, PSSE integration) | $36,000 - $72,000 |
+| Storage | Planning models, topology data, scenario outputs — est. 5-15 TB | $6,000 - $18,000 |
+| **Use Case 5 Total** | | **$102,000 - $210,000** |
+
+**Business Outcome:** Grid planning results in hours instead of months, enable 5/10/15-year forward planning at scale, support Siemens/PSSE digital twin integration
+
+---
+
+### Use Case 6: Energy Market Data Sharing & Marketplace
+*Priority: Future State — Network Effect*
+
+| Workload | Description | Annual Estimate |
+|----------|-------------|----------------|
+| Data Sharing / Listings | Governed data exchange with 500+ market participants | $18,000 - $36,000 |
+| Marketplace Consumption | Third-party weather, S&P, market data via Snowflake Marketplace | $12,000 - $24,000 |
+| Reader Accounts / Clean Rooms | Secure collaboration with ISOs (PJM, SPP, TVA) and regulators | $12,000 - $24,000 |
+| **Use Case 6 Total** | | **$42,000 - $84,000** |
+
+**Business Outcome:** Eliminate manual SFTP data distribution, real-time data transparency for 500+ stakeholders, enable cross-ISO analytics with PJM/SPP/TVA""",
+
+    "sizing_summary": """### Full ACV / TCV Potential
+
+| Metric | Conservative (Phase 1) | Moderate (Year 1) | Full Potential (Year 2-3) |
+|--------|----------------------|-------------------|-------------------------|
+| **UC1: ML Market Risk** | $66,000 | $90,000 | $114,000 |
+| **UC2: Anomaly Detection** | $72,000 | $100,000 | $132,000 |
+| **UC3: Data Fabric / EDW** | $168,000 | $250,000 | $324,000 |
+| **UC4: Legacy Migration** | $54,000 | $80,000 | $108,000 |
+| **UC5: Grid Planning** | $102,000 | $155,000 | $210,000 |
+| **UC6: Data Sharing** | $42,000 | $60,000 | $84,000 |
+| **Total ACV** | **$504,000** | **$735,000** | **$972,000** |
+| **3-Year TCV** | **$1,512,000** | **$2,205,000** | **$2,916,000** |
+
+---
+
+### Phased Revenue Ramp
+
+| Phase | Timeline | Use Cases | ACV Target |
+|-------|----------|-----------|------------|
+| **Phase 1 (Land)** | Q4 FY27 (Nov 2026) | UC1 + UC2 (ML + Anomaly Detection) | **$138,000 - $190,000** |
+| **Phase 2 (Expand)** | Q1-Q2 FY28 | + UC3 + UC4 (Data Fabric + Migration) | **$360,000 - $522,000** |
+| **Phase 3 (Scale)** | Q3-Q4 FY28 | + UC5 + UC6 (Grid Planning + Sharing) | **$504,000 - $972,000** |
+
+---
+
+### Benchmark Validation
+
+| Benchmark | Value | MISO Comparison |
+|-----------|-------|----------------|
+| Comparable utility avg ACV | ~$2.2M | MISO at $735K-$972K is conservative — room to grow |
+| Vistra Corp (closest comp) | $949K | Similar market analytics focus; MISO has broader scope |
+| Powerex (trading arm) | $435K | MISO Phase 1 exceeds this with just 2 use cases |
+| Revenue-based benchmark | 0.18% of rev | $735K = 0.18% of $413M revenue — well within range |
+| Per-employee benchmark | $668-$884/employee | 1,100 employees x $668-$884 = $735K-$972K |
+| IDEA Group expansion | 550 potential users | Current sizing covers Ben's 7 FTEs; IDEA Group = 10-50x user expansion |
+
+---
+
+### MACC / Procurement Path
+
+- MISO has an existing **Microsoft Azure Consumption Commitment (MACC)**
+- Snowflake can be procured through **Azure Marketplace** — counts toward MSFT spend commit
+- **Microsoft Available Funding:** Up to $20K provided by Microsoft toward Snowflake contract
+- **Snowflake Partner Funding:** Up to 10% of agreement value for migration/implementation services
+- Example: $735K contract → $73.5K Snowflake-funded partner services
+
+### Upside Drivers (Beyond Current Sizing)
+- IDEA Group adoption (550 members) could 2-3x compute consumption
+- AI Community of Practice (~company-wide) driving new AI/ML workloads
+- Cross-ISO data sharing network effect (PJM, SPP, TVA, ERCOT)
+- Siemens digital twin integration (PSSE on Snowflake) — new workload category
+- OpenFlow real-time streaming — sub-second market data ingestion
+- Snowpark Container Services for custom power system models""",
 }
 
 for key, val in DEFAULTS.items():
@@ -327,6 +480,7 @@ with st.sidebar:
             "Pilot Prerequisites & Resources",
             "Pilot Execution Plan",
             "Mutual Success Plan & Timeline",
+            "ACV / TCV Sizing",
         ],
         label_visibility="collapsed",
     )
@@ -404,6 +558,22 @@ elif section == "Pilot Execution Plan":
 elif section == "Mutual Success Plan & Timeline":
     st.markdown("## Mutual Success Plan & Timeline")
     editable_section("mutual_success")
+
+elif section == "ACV / TCV Sizing":
+    st.markdown("## ACV / TCV Sizing & Business Outcomes")
+    editable_section("sizing_overview")
+    st.markdown("---")
+    st.markdown("## Sizing by Use Case")
+    editable_section("sizing_by_usecase")
+    st.markdown("---")
+    editable_section("sizing_summary")
+    if not st.session_state.edit_mode:
+        st.markdown("---")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Phase 1 ACV (Land)", "$138K-$190K", "UC1 + UC2")
+        c2.metric("Year 1 ACV (Expand)", "$735K", "All 6 use cases")
+        c3.metric("Full Potential ACV", "$972K", "Year 2-3 steady state")
+        c4.metric("3-Year TCV", "$2.2M - $2.9M", "Conservative to full")
 
 st.markdown("---")
 st.caption("MISO x Snowflake | 30-Day POC Evaluation Plan | Confidential | Generated May 2026")
